@@ -1,0 +1,1 @@
+Get-CimInstance -ComputerName $CompName -ClassName "Win32_Processor" | Select-Object -Property DeviceID,Name,NumberOfCores
