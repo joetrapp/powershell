@@ -1,4 +1,7 @@
-$intid = get-netipinterface -addressfamily IPv4 -InterfaceAlias ethernet | select-object -ExpandProperty interfaceindex
+#### Reset static IP computer to DHCP
+#### Created: YVC-era
+
+$intid = Get-NetIPInterface -addressfamily IPv4 -InterfaceAlias ethernet | Select-Object -ExpandProperty interfaceindex
 route delete 0.0.0.0
-set-netipinterface -interfaceindex $intid -dhcp enabled
+Set-NetIPInterface -interfaceindex $intid -dhcp enabled
 ipconfig /renew
