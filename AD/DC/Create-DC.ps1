@@ -15,6 +15,8 @@ If ($ADStatus -eq $False) {
 } Else {
 
 	# Create new forest/Promote to DC/install DNS if neccessary
+	Write-Host "WARNING: DC name will be $ENV:computername. Are you sure you want this to be the DC's name? You cannot change it once it has been promoted and must demote it to rename it."
+	Pause
 	$DomainName = Read-Host "Enter New Forest Domain Name"
 	Write-Host "This server is being promoted. This will cause the system to reboot. You are almost finished" -BackgroundColor Black -ForegroundColor Green
 	Start-Sleep -s 1
