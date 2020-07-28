@@ -7,10 +7,14 @@ If ((Get-WindowsFeature DNS).Installed -eq $False) {
     # Install DNS role
     Install-WindowsFeature DNS -IncludeManagementTools
 
+    # Set defaults for NetID/Netmask
+    $NetID = "192.168.1.0"
+    $Netmask = "24"
+
     # Get info to build domain
     $ZoneName = Read-Host "Enter the Zone name"
-    $NetID = Read-Host "Enter the Network ID of the Reverse lookup Zone in Dot notation (xxx.xxx.xxx.xxx) (EX. 192.168.1.0)"
-    $Netmask = Read-Host "Enter the netmask of the Reverse lookup Zone in bits (12, 18, 24)"
+    $NetID = Read-Host "Enter the Network ID of the Reverse lookup Zone in Dot notation (Default is 192.168.1.0)"
+    $Netmask = Read-Host "Enter the netmask of the Reverse lookup Zone in bits (Default is 24)"
 
     # Create FWD lookup zone
     Add-DNSServerPrimaryZone -Name $ZoneName -DynamicUpdate "NonsecureAndSecure" -ZoneFile "$ZoneName.dns"
