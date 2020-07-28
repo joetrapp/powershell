@@ -31,8 +31,7 @@ If ((Get-WindowsFeature DNS).Installed -eq $False) {
     Get-DNSServerZone | Where-Object {$_.ZoneName -eq $ZoneName}
     Get-DNSServerZone | Where-Object {$_.ZoneName -like $NetID}
     Write-Host "This was the created Zone"
-    Write-Host ""
-    Pause
+    Start-Sleep 3
 
 } ELSE {
 
