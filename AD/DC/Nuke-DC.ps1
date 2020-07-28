@@ -1,5 +1,5 @@
 #### Nuke DC (Domain Controller. Not the other one)
-Clear
+Clear-Host
 
 $ADStatus = (Get-ADForest)
 
