@@ -1,4 +1,6 @@
-Clear
+#### Manage DNS - Install DNS, create zones, add A records and check records
+#### Created: Powershell scripting 101 @ YVC
+Clear-Host
 
 #Checks if DNS is installed or not
 If ((Get-WindowsFeature DNS).Installed -eq $False) {
@@ -10,7 +12,7 @@ Install-WindowsFeature DNS -IncludeManagementTools
 }
 
 #Checks if there are no forwarders on the DNS server
-If ((Get-DnsServerForwarder).IPaddress -eq $null) {
+If (!((Get-DnsServerForwarder).IPaddress)) {
 
 	$dnsfwdopr = Read-Host "You don't have a DNS Forwarder. Your DNS server will not be able to resolve hosts it's not authoritative to. Do you want to set a DNS forwarder? (Y/N)"
 
@@ -33,7 +35,7 @@ While($true) {
 
 $opr0 = $null
 $operation = $null
-Clear
+Clear-Host
 
 Write-Host "What operation would you like to perform?"
 Write-Host ""
@@ -50,7 +52,7 @@ Write-Host "Your current choice is:" $operation
 Write-Host ""
 $opr0 = Read-Host "Type Number & Enter"
 
-Clear
+Clear-Host
 
 #Run operation based on menu selection
 Switch ($opr0) {
@@ -64,7 +66,7 @@ Switch ($opr0) {
 
 }
 
-Clear
+Clear-Host
 
 
 Switch ($operation) {
@@ -92,8 +94,12 @@ Switch ($operation) {
 	#Display created zone
 	Write-Host ""
 
-	Get-DNSServerZone | Where {$_.ZoneName -eq $ZoneName}
-	Get-DNSServerZone | Where {$_.ZoneName -like $NetID}
+	Get-DNSServerZone | Where-Object {$_.ZoneName -eq $ZoneName}
+	Get-DNSServerZone | Where-Object {$_.ZoneName -like $NetID}
+
+	# Add basic Google & Cloudflare DNS servers
+	Add-DnsServerForwarder -IPAddress "8.8.8.8" -Passthru
+	Add-DnsServerForwarder -IPAddress "1.1.1.1" -Passthru
 
 	Write-Host "This was the created Zone"
 	Write-Host ""
@@ -106,7 +112,7 @@ Switch ($operation) {
 	Write-Host "Viewing Zone Info"
 
 	#Get all manually created zones
-	Get-DNSServerZone | Where {$_.IsAutoCreated -ne "True"}
+	Get-DNSServerZone | Where-Object {$_.IsAutoCreated -ne "True"}
 	Write-Host ""
 	Pause
 
@@ -118,7 +124,7 @@ Switch ($operation) {
 	Write-Host ""
 
 	#Get all manually created zones, and NO Reverse Lookup Zones
-	Get-DNSServerZone | Where {$_.IsAutoCreated -ne "True" -AND ($_.IsReverseLookupZone -ne "True")}
+	Get-DNSServerZone | Where-Object {$_.IsAutoCreated -ne "True" -AND ($_.IsReverseLookupZone -ne "True")}
 	Write-Host ""
 
 	$ZoneName = Read-Host "Which Zone would you like to create a new A record in? (Type ZoneName)"
@@ -142,8 +148,8 @@ Switch ($operation) {
 	Write-Host ""
 
 	#Get all manually created zones, and NO Reverse Lookup Zones
-	Clear
-	Get-DNSServerZone | Where {$_.IsAutoCreated -ne "True" -AND ($_.IsReverseLookupZone -ne "True")}
+	Clear-Host
+	Get-DNSServerZone | Where-Object {$_.IsAutoCreated -ne "True" -AND ($_.IsReverseLookupZone -ne "True")}
 	Write-Host ""
 
     	$ZoneSelect = Read-Host "Which Zone would you like to get A records from? (Type ZoneName)"
