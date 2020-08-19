@@ -33,7 +33,7 @@ If ((Get-WindowsFeature DNS).Installed -eq $False) {
     Add-DNSServerPrimaryZone -Name $ZoneName -DynamicUpdate "NonsecureAndSecure" -ZoneFile "$ZoneName.dns"
 
     # Create REV lookup zone
-    Add-DNSServerPrimaryZone -NetworkID "$NetID/$Netmask" -ZoneFile "$NetID.in-addr.arpa.dns" -ReplicationScope "Domain"
+    Add-DNSServerPrimaryZone -NetworkID "$NetID/$Netmask" -ReplicationScope "Domain"
 
     # Add basic Google & Cloudflare DNS servers
     Add-DnsServerForwarder -IPAddress "8.8.8.8" -Passthru

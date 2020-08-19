@@ -27,11 +27,7 @@ $Netmask = Read-Host -Prompt "Enter the netmask for the DHCP scope. Default is 2
 $Gateway = Read-Host -Prompt "Enter the Default Gateway IP address. Default is 192.168.1.1"
 $DNSServer = Read-Host -Prompt "Enter the DNS Server IP address"
 
-	Add-DhcpServerv4Scope `
-		-Name $ScopeName `
-		-StartRange $StartIP `
-		-EndRange $EndIP `
-		-SubnetMask $Netmask
+	Add-DhcpServerv4Scope -Name $ScopeName -StartRange $StartIP -EndRange $EndIP -SubnetMask $Netmask
 
     # Will error but not stop script if no DNS server is detected
     Get-DhcpServerv4Scope | Where-Object {$_.Name -eq $ScopeName} | Set-DHCPServerv4OptionValue -DNSServer $DNSServer -Router $Gateway
