@@ -25,7 +25,7 @@ If ((Get-WindowsFeature DNS).Installed -eq $False) {
     $Netmask = "24"
 
     # Get info to build domain
-    $ZoneName = Read-Host "Enter the Zone name"
+    $ZoneName = Read-Host "Enter the Zone name (Ex. Contoso.com)"
     $NetID = Read-Host "Enter the Network ID of the Reverse lookup Zone in Dot notation (Default is 192.168.1.0)"
     $Netmask = Read-Host "Enter the netmask of the Reverse lookup Zone in bits (Default is 24)"
 
