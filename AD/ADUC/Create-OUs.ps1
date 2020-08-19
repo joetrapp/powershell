@@ -4,7 +4,7 @@
 $Company = "Company Name"
 $Path = "DC=DC1,DC=COM"
 
-New-ADOrgnaizationalUnit -Name "$Company Users" -Path $Path -ProtectedFromAccidentalDeletion $True
-New-ADOrgnaizationalUnit -Name "$Company Groups" -Path $Path -ProtectedFromAccidentalDeletion $True
-New-ADOrgnaizationalUnit -Name "$Company Computers" -Path $Path -ProtectedFromAccidentalDeletion $True
-New-ADOrgnaizationalUnit -Name "$Company Special Users" -Path $Path -ProtectedFromAccidentalDeletion $True
+New-ADOrganizationalUnit -Name "$Company Users" -Path $Path -ProtectedFromAccidentalDeletion $True
+New-ADOrganizationalUnit -Name "$Company Groups" -Path $Path -ProtectedFromAccidentalDeletion $True
+New-ADOrganizationalUnit -Name "$Company Computers" -Path $Path -ProtectedFromAccidentalDeletion $True
+New-ADOrganizationalUnit -Name "$Company Special Users" -Path $Path -ProtectedFromAccidentalDeletion $True
