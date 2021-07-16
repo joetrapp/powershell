@@ -1,20 +1,20 @@
 ## Specific to Rod's house for now
 
-Clear
-# Elevate permissions/Update help
+# Elevate permissions
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
-#Elevate permissions
 
-Update-Help -Force
-
-# Create new local user/rename computer
+# Create new local user
 $user = read-host "New username (RH user):"
 $firstname = read-host "New user's actual first name:"
 New-LocalUser -firstname $firstname -username $user
 
+# Rename computer
 $newcompname = read-host "New Computer Name (RHL0*): "
 Rename-Computer -newname $newcompname
-Write-Host "New computername is" $newcompname
+Write-Host "New computer name is" $newcompname
+
+# Update PS Help
+Update-Help -Force
 
 # Enforce password rules (WinPro only)
 secedit /export /cfg c:\secpol.cfg
@@ -23,22 +23,11 @@ secedit /configure /db c:\windows\security\local.sdb /cfg c:\secpol.cfg /areas S
 rm -force c:\secpol.cfg -confirm:$false
 
 net accounts /MAXPWAGE:365
-
 net accounts /MINPWLEN:10
-
-# Run ninite.exe in same directory
-Write-Host "Rename ninite executeable (ninite.exe), put in same folder as current script"
-Pause
-
-.\ninite.exe
 
 # Get rid of bloatware
 
-$bloatlist = @(
-
-"Dell Inc."
-
-)
+$bloatlist = @("Dell Inc.")
 
 foreach ($application in $bloatlist) {
 
@@ -118,7 +107,7 @@ $services = @(
     "XboxNetApiSvc"                            # Xbox Live Networking Service
 
     # Services which cannot be disabled
-    #"WdNisSvc"
+    # "WdNisSvc"
 )
 
 foreach ($service in $services) {
